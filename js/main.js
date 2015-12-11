@@ -1,5 +1,6 @@
 'use strict';
 // constants || globals
+var URL = window.location.href;
 var DATAURL;
 var OCTDATA;
 var HASRUN = false;
@@ -9,21 +10,24 @@ var ctx     = canvas.getContext('2d');
 // DOM/UI specific varaibles
 var mkbtn   = document.getElementById('mkbtn');
 var svbtn   = document.getElementById('svbtn');
+var swchbtn = document.getElementById('swchbtn');
 var ctr     = document.getElementById('ctr');
 var hld     = document.getElementById('hld');
 // instatiate images
 var bgIMG  = new Image();
 var ovIMG  = new Image();
+var TINA1 = "images/tina.png";
+var TINA2 = "images/tina.gif";
+// image sources
+bgIMG.src = "images/space.jpg";
+ovIMG.src = TINA2;
 // store the cached image value
 var cachedImage = localStorage.getItem('savedImage');
 // image creation
 function draw() {
   ctx.drawImage(bgIMG, 0, 0);
-  ctx.drawImage(ovIMG, 0, 230);
+  ctx.drawImage(ovIMG, 0, 200, 200, 200);
 }
-// image sources
-bgIMG.src = "images/space.jpg";
-ovIMG.src = "images/tina.gif";
 // attempting to allow for CORS
 bgIMG.setAttribute('crossOrigin', 'anonymous');
 ovIMG.setAttribute('crossOrigin', 'anonymous');
@@ -31,11 +35,30 @@ ovIMG.setAttribute('crossOrigin', 'anonymous');
 document.onreadystatechange = function() {
   if(document.readyState == "complete") {
     if (cachedImage !== undefined) {
-      sub.insertAdjacentHTML('beforebegin', '<div id="msg" class="red">previously saved image</div>');
-      sub.insertAdjacentHTML('afterbegin', '<img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
+      // ctr.insertAdjacentHTML('afterbegin', '<div id="msg" class="red">previously saved image</div>');
+      // ctr.insertAdjacentHTML('beforeend', '<img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
+      ctr.innerHTML = ('<div id="msg" class="red">previously saved image</div><img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
     }
   }
 }
+
+function overlayChangeSource(path){
+  ovIMG  = new Image();
+  ovIMG.onload = function(){
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.drawImage(bgIMG, 0, 0);
+    ctx.drawImage(ovIMG, 0, 0, 200, 200);
+  }
+  ovIMG.src = path;
+}
+
+
+
+
+
+
+
+
 // click event to create data stream
 mkbtn.addEventListener('click', function(evt){
   DATAURL = canvas.toDataURL("image/png");
@@ -106,7 +129,7 @@ function handleMouseMove(evt){
  canMouseY = parseInt(evt.clientY - yOffset);
    if(movement.dragging){
      ctx.drawImage(bgIMG, 0, 0);
-     ctx.drawImage(ovIMG, canMouseX-128/2, canMouseY-120/2,128,120);
+     ctx.drawImage(ovIMG, canMouseX-128/2, canMouseY-120/2,200,200);
    }
 }
 // create a downloadable file link/stream

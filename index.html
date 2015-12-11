@@ -11,20 +11,16 @@
   <h2>Hello there Tina in space</h2>
   <canvas id="theCanvas" width="400" height="400" class="image-canvas"></canvas>
 
-  <ul>
-    <li class="list-item"><span id="mkbtn">GO MAKE!</span></li>
-    <li class="list-item"><span id="svbtn">GO SAVE! (locally)</span></li>
-    <li class="list-item"><a href="" id="dwl" onclick="createImageFile(DATAURL)">download</a></li>
+  <ul class="list">
+    <li class="list-item"><span id="mkbtn" class="btn">GO MAKE!</span></li>
+    <li class="list-item"><span id="svbtn" class="btn">GO SAVE! (locally)</span></li>
+    <li class="list-item"><span class="btn" onclick="overlayChangeSource(TINA1)">TINA 1</span></li>
+    <li class="list-item"><span class="btn" onclick="overlayChangeSource(TINA2)">TINA 2</span></li>
+    <!-- <li class="list-item"><a href="" id="dwl" onclick="createImageFile(DATAURL)">download</a></li> -->
   </ul>
-
-
-
-
-  <div id="ctr">
+  <div id="ctr" class="center-container">
     <div id="sub"></div>
   </div>
-
-
   <script src="js/main.js"></script>
 </body>
 </html>

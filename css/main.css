@@ -10,7 +10,7 @@ body {
 canvas {
   cursor: crosshair;
 }
-#mkbtn, #svbtn {
+.btn {
   cursor: pointer;
 }
 .warn {
@@ -20,7 +20,7 @@ canvas {
   color: crimson;
   margin-bottom: 2px;
 }
-ul {
+.list {
   margin: 20px auto;
   list-style: none;
 }
@@ -37,10 +37,7 @@ ul {
   height: 100px;
   width: 100px;
 }
-#ctr {
+.center-container {
   width: 80%;
   margin: 0 auto;
-}
-#msg {
-  /*width: 300px;*/
 }
