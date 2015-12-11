@@ -1,6 +1,5 @@
 'use strict';
 // constants || globals
-var URL = window.location.href;
 var DATAURL;
 var OCTDATA;
 var HASRUN = false;
@@ -16,11 +15,13 @@ var hld     = document.getElementById('hld');
 // instatiate images
 var bgIMG  = new Image();
 var ovIMG  = new Image();
-var TINA1 = "images/tina.png";
-var TINA2 = "images/tina.gif";
-// image sources
-bgIMG.src = "images/space.jpg";
-ovIMG.src = TINA2;
+// image source variables
+var TINA1  = "images/tina.png";
+var TINA2  = "images/tina.gif";
+var BG     = "images/space.jpg";
+// inital image sources
+bgIMG.src  = BG;
+ovIMG.src  = TINA2;
 // store the cached image value
 var cachedImage = localStorage.getItem('savedImage');
 // image creation
@@ -41,7 +42,7 @@ document.onreadystatechange = function() {
     }
   }
 }
-
+// change the overlay image and redraw
 function overlayChangeSource(path){
   ovIMG  = new Image();
   ovIMG.onload = function(){
@@ -51,20 +52,11 @@ function overlayChangeSource(path){
   }
   ovIMG.src = path;
 }
-
-
-
-
-
-
-
-
 // click event to create data stream
 mkbtn.addEventListener('click', function(evt){
   DATAURL = canvas.toDataURL("image/png");
   ctr.innerHTML = '<div id="msg" class="red">not saved</div><img src="' + DATAURL + '" class="image-canvas" alt="composite image" title="composite image">';
 });
-
 // local storage persistance of current displayed image
 svbtn.addEventListener('click', function(evt){
   var currentImage = localStorage.getItem('savedImage');
@@ -138,6 +130,7 @@ function createImageFile(evt, data){
   OCTDATA     = DATAURL.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
   var dwl  = document.getElementById('dwl');
   dwl.href = OCTDATA;
+  window.open
   console.log('application/octet-stream =\n' , OCTDATA);
 }
 // calling the movement helper funcitons on the canvas for editing
