@@ -3,53 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>POC</title>
-  <style>
-  * {
-      font-family: sans-serif;
-      font-weight: 100;
-    }
-  body {
-    text-align: center;
-  }
-  #btn {
-    cursor: pointer;
-  }
-  </style>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="
+  https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
 </head>
 <body onload="draw()">
   <h2>Hello there Tina in space</h2>
   <canvas id="theCanvas" width="400" height="400"></canvas>
   <br><br>
-  <span id="btn">GO MAKE!</span>
+  <span id="mkbtn">GO MAKE!</span>
   <br><br>
-  <div id="ctr"></div>
-  <script>
+  <div id="ctr">
+    <span id="hld"></span>
+    <!-- afterend -->
+  </div>
+  <span id="svbtn">GO SAVE! (locally)</span>
 
-    var canvas = document.getElementById('theCanvas');
-    var btn    = document.getElementById('btn');
-    var ctr    = document.getElementById('ctr');
-    var ctx    = canvas.getContext('2d');
-
-    var bgIMG  = new Image();
-    var ovIMG  = new Image();
-
-    function draw() {
-      ctx.drawImage(bgIMG, 0, 0);
-      ctx.drawImage(ovIMG, 0, 230);
-    }
-
-    bgIMG.src = "space.jpg";
-    ovIMG.src = "tina.gif";
-
-    bgIMG.setAttribute('crossOrigin', 'anonymous');
-    ovIMG.setAttribute('crossOrigin', 'anonymous');
-
-    btn.addEventListener('click', function(e){
-      var dataURL = canvas.toDataURL("image/png");
-      ctr.innerHTML = '<img src="' + dataURL + '" alt="composite image">'
-    });
-
-  </script>
-
+  <script src="js/main.js"></script>
 </body>
 </html>

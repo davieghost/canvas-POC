@@ -1,0 +1,17 @@
+* {
+    font-family: sans-serif;
+    font-weight: 100;
+  }
+body {
+  text-align: center;
+}
+#mkbtn, #svbtn {
+  cursor: pointer;
+}
+.warn {
+  outline: 3px solid crimson;
+}
+.red {
+  color: crimson;
+  margin-bottom: 2px;
+}
