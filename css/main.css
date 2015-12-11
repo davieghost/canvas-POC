@@ -1,9 +1,14 @@
 * {
     font-family: sans-serif;
     font-weight: 100;
+    margin: 0;
+    padding: 0;
   }
 body {
   text-align: center;
+}
+canvas {
+  cursor: crosshair;
 }
 #mkbtn, #svbtn {
   cursor: pointer;
@@ -14,4 +19,25 @@ body {
 .red {
   color: crimson;
   margin-bottom: 2px;
+}
+ul {
+  margin: 20px auto;
+  list-style: none;
+}
+.list-item {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.image-canvas {
+  margin: 10px;
+}
+.result {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+}
+#ctr {
+  width: 80%;
+  margin: 0 auto;
 }
