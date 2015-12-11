@@ -5,6 +5,7 @@
     padding: 0;
   }
 body {
+  background-color: ghostwhite;
   text-align: center;
 }
 canvas {
@@ -16,9 +17,14 @@ canvas {
 .warn {
   outline: 3px solid crimson;
 }
+.red, .blue {
+  margin-bottom: 2px;
+}
 .red {
   color: crimson;
-  margin-bottom: 2px;
+}
+.blue {
+  color: cornflowerblue;
 }
 .list {
   margin: 20px auto;

@@ -35,10 +35,12 @@ ovIMG.setAttribute('crossOrigin', 'anonymous');
 // print the current image if it is in local storage
 document.onreadystatechange = function() {
   if(document.readyState == "complete") {
-    if (cachedImage !== undefined) {
+    if (cachedImage !== "undefined") {
       // ctr.insertAdjacentHTML('afterbegin', '<div id="msg" class="red">previously saved image</div>');
       // ctr.insertAdjacentHTML('beforeend', '<img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
       ctr.innerHTML = ('<div id="msg" class="red">previously saved image</div><img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
+    } else {
+      ctr.innerHTML = ('<div id="msg" class="blue">no image yet</div>');
     }
   }
 }
@@ -62,8 +64,10 @@ svbtn.addEventListener('click', function(evt){
   var currentImage = localStorage.getItem('savedImage');
 
   if(DATAURL !== currentImage){
+    var count = 0;
+
     localStorage.setItem('savedImage', DATAURL);
-    localStorage.setItem('count', +1);
+    localStorage.setItem('count', ++count);
     if(!HASRUN){
       HASRUN = true;
       ctr.innerHTML = '<div id="msg" class="red">newly saved image (inside local storage)</div><img src="' + DATAURL + '" class="image-canvas" alt="composite image" title="composite image">';
