@@ -2,28 +2,20 @@
 // constants || globals
 var DATAURL;
 var OCTDATA;
-var canMouseX;
-var canMouseY;
-
 var HASRUN = false;
 // canvas specific varaibles
 var canvas  = document.getElementById('theCanvas');
 var ctx     = canvas.getContext('2d');
-
 // DOM/UI specific varaibles
 var mkbtn   = document.getElementById('mkbtn');
 var svbtn   = document.getElementById('svbtn');
 var ctr     = document.getElementById('ctr');
 var hld     = document.getElementById('hld');
-
 // instatiate images
 var bgIMG  = new Image();
 var ovIMG  = new Image();
-
 // store the cached image value
 var cachedImage = localStorage.getItem('savedImage');
-var currentImage;
-
 // image creation
 function draw() {
   ctx.drawImage(bgIMG, 0, 0);
@@ -38,41 +30,33 @@ ovIMG.setAttribute('crossOrigin', 'anonymous');
 // print the current image if it is in local storage
 document.onreadystatechange = function() {
   if(document.readyState == "complete") {
-    console.log('now!');
-    if (cachedImage !== null) {
-      ctr.insertAdjacentHTML('afterbegin', '<img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
+    if (cachedImage !== undefined) {
+      sub.insertAdjacentHTML('beforebegin', '<div id="msg" class="red">previously saved image</div>');
+      sub.insertAdjacentHTML('afterbegin', '<img src="' + cachedImage + '" class="image-canvas" alt="composite image" title="composite image">');
     }
   }
 }
 // click event to create data stream
-mkbtn.addEventListener('click', function(event){
-
+mkbtn.addEventListener('click', function(evt){
   DATAURL = canvas.toDataURL("image/png");
-
-  ctr.insertAdjacentHTML('afterbegin', '<img src="' + DATAURL + '" class="image-canvas" alt="composite image" title="composite image">');
-
-  console.log('temporary data @ \n' + DATAURL);
-
+  ctr.innerHTML = '<div id="msg" class="red">not saved</div><img src="' + DATAURL + '" class="image-canvas" alt="composite image" title="composite image">';
 });
+
 // local storage persistance of current displayed image
-svbtn.addEventListener('click', function(event){
+svbtn.addEventListener('click', function(evt){
   var currentImage = localStorage.getItem('savedImage');
 
   if(DATAURL !== currentImage){
     localStorage.setItem('savedImage', DATAURL);
-  }
-  else if (DATAURL === currentImage){
-      if(HASRUN){
-        HASRUN = true;
-        sub.insertAdjacentHTML('beforebegin', '<div class="red">current image</div>');
-      }
-    sub.insertAdjacentHTML('beforeend', '<img src="' + DATAURL + '" class="image-canvas result" alt="composite image" class="warn" title="composite image">');
-  }
-  else{
-    console.log('else...')
+    localStorage.setItem('count', +1);
+    if(!HASRUN){
+      HASRUN = true;
+      ctr.innerHTML = '<div id="msg" class="red">newly saved image (inside local storage)</div><img src="' + DATAURL + '" class="image-canvas" alt="composite image" title="composite image">';
+    }
   }
 });
 // overlay image movement...
+// helper function variables
 var canvasBox      = canvas.getBoundingClientRect();
 var canvasDim      = {
   Y: canvasBox.top,
@@ -96,56 +80,53 @@ var movement       = {
   yOffset: yOffset,
   canvasHeight: canvasHeight,
   canvasWidth: canvasWidth,
-  DRAGGING: DRAGGING
+  dragging: DRAGGING
 }
 
-console.log(movement);
-
-
+var canMouseX;
+var canMouseY;
 // helper functions for movement of overlay image
-function handleMouseDown(event){
- canMouseX = parseInt(event.clientX - xOffset);
- canMouseY = parseInt(event.clientY - yOffset);
-
- DRAGGING = true;
+function handleMouseDown(evt){
+ canMouseX = parseInt(evt.clientX - xOffset);
+ canMouseY = parseInt(evt.clientY - yOffset);
+ movement.dragging = true;
 }
-
-function handleMouseUp(event){
-   canMouseX = parseInt(event.clientX - xOffset);
-   canMouseY = parseInt(event.clientY - yOffset);
-
-   DRAGGING = false;
+function handleMouseUp(evt){
+   canMouseX = parseInt(evt.clientX - xOffset);
+   canMouseY = parseInt(evt.clientY - yOffset);
+   movement.dragging = false;
 }
-
-function handleMouseOut(event){
-   canMouseX = parseInt(event.clientX - xOffset);
-   canMouseY = parseInt(event.clientY - yOffset);
+function handleMouseOut(evt){
+   canMouseX = parseInt(evt.clientX - xOffset);
+   canMouseY = parseInt(evt.clientY - yOffset);
+   movement.dragging = false;
 }
-
-function handleMouseMove(event){
- canMouseX = parseInt(event.clientX - xOffset);
- canMouseY = parseInt(event.clientY - yOffset);
-   if(DRAGGING){
+function handleMouseMove(evt){
+ canMouseX = parseInt(evt.clientX - xOffset);
+ canMouseY = parseInt(evt.clientY - yOffset);
+   if(movement.dragging){
      ctx.drawImage(bgIMG, 0, 0);
      ctx.drawImage(ovIMG, canMouseX-128/2, canMouseY-120/2,128,120);
    }
 }
-function createImageFile(data){
+// create a downloadable file link/stream
+function createImageFile(evt, data){
+  evt.preventDefault();
   OCTDATA     = DATAURL.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
   var dwl  = document.getElementById('dwl');
   dwl.href = OCTDATA;
   console.log('application/octet-stream =\n' , OCTDATA);
 }
-
-canvas.onmousedown = function(event){
-  handleMouseDown(event);
+// calling the movement helper funcitons on the canvas for editing
+canvas.onmousedown = function(evt){
+  handleMouseDown(evt);
 }
-canvas.onmouseup = function(event){
-  handleMouseUp(event);
+canvas.onmouseup = function(evt){
+  handleMouseUp(evt);
 }
-canvas.onmouseout = function(event) {
-  handleMouseOut(event);
+canvas.onmouseout = function(evt) {
+  handleMouseOut(evt);
 }
-canvas.onmousemove = function(event) {
-  handleMouseMove(event);
+canvas.onmousemove = function(evt) {
+  handleMouseMove(evt);
 }
