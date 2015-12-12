@@ -105,10 +105,18 @@ var movement       = {
 var canMouseX;
 var canMouseY;
 // helper functions for movement of overlay image
+var makeColor = '%c',
+    color1 = 'color:red;',
+    color2 = 'color:blue;',
+    color3 = 'color:black;',
+    color4 = 'color:green;';
+
 function handleMouseDown(evt){
  canMouseX = parseInt(evt.clientX - xOffset);
  canMouseY = parseInt(evt.clientY - yOffset);
  movement.dragging = true;
+ console.log("%cthis is reversed..." + "(" + "x= " + makeColor + canMouseY + " %c, " + "y= " + makeColor + canMouseX + ")" , color3, color2 , color3, color4 );
+ // console.log("%cthis is reversed..." + "(" + "x= " + makeColor + canMouseY + " %c, " + "y= " + makeColor + canMouseX + ")" , color3, color2 , color3, color4 );
 }
 function handleMouseUp(evt){
    canMouseX = parseInt(evt.clientX - xOffset);
@@ -125,7 +133,11 @@ function handleMouseMove(evt){
  canMouseY = parseInt(evt.clientY - yOffset);
    if(movement.dragging){
      ctx.drawImage(bgIMG, 0, 0);
-     ctx.drawImage(ovIMG, canMouseX-128/2, canMouseY-120/2,200,200);
+    //  ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+     ctx.drawImage(ovIMG, canMouseX-200/2, canMouseY-230/2, 200, 200);
+    // console.log(canMouseX-128);
+    // ctx.drawImage(ovIMG, canMouseX + 200/2  /* todo: fix this: this is actually the y value */, canMouseY /* todo: fix this: this is actually the x value */, 200, 200);
+
    }
 }
 // create a downloadable file link/stream
