@@ -1,3 +1,3 @@
-### Simple Canvas POC
+### tube contents:
 
-Take two images, output one savable png
+HTML5 Canvas image overlay save to file proof of concept. Take two images, output one savable png
